@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moodscape: FEAR</title>
+    <!-- Link to the external CSS file -->
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Load p5.js library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+    <!-- Link to your custom JavaScript file -->
+    <script src="sketch.js"></script>
+</head>
+<body>
+
+
+    <!-- Slider Control at Top -->
+    <div id="slider-container">
+        <label for="dreadSlider">Fear Level</label>
+        <input type="range" id="dreadSlider" min="0" max="200" value="40">
+    </div>
+    
+    <!-- Toggleable Info Box in Bottom Right -->
+    <div id="interaction-instructions" class="collapsed">
+        <div id="instructions-header">
+            <strong>INFO</strong> <span id="toggle-icon">+</span>
+        </div>
+        <div id="instructions-content">
+            <p>Use the slider <strong>above</strong> to set the level of fear.</p>
+            <p>Move your cursor <strong>upwards</strong> to increase intensity and <strong>downwards</strong> to decrease tension.</p>
+            <p><strong>Move</strong> your cursor horizontally to control movement.</p>
+            <p><strong>Click</strong> the canvas for a brief jolt of panic.</p>
+        </div>
+    </div>
+
+</body>
+</html>

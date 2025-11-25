@@ -1,0 +1,108 @@
+/* Basic body styling */
+body { 
+    margin: 0; 
+    padding: 0;
+    overflow: hidden; 
+    background-color: #000000; /* Pure black background */
+    font-family: sans-serif; 
+}
+
+canvas { 
+    display: block; 
+}
+
+/* Styling for the emotion title overlay */
+#emotion-title {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    color: #CA8BFF; /* Original purple */
+    font-size: 28px; 
+    z-index: 10; 
+    font-weight: bold;
+    pointer-events: none; 
+    text-shadow: 0px 0px 5px rgba(202, 139, 255, 0.4); /* Eerie glow */
+    letter-spacing: 1px;
+}
+
+/* Slider Styling */
+#slider-container {
+    position: absolute;
+    top: 20px;
+    left: 85%;
+    transform: translateX(-50%); /* Center horizontally */
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #9266B6; /* Muted Purple */
+    font-size: 14px;
+    font-weight: bold;
+}
+
+#dreadSlider {
+    margin-top: 5px;
+    width: 200px;
+    cursor: pointer;
+    accent-color: #CA8BFF;
+}
+
+/* Styling for the interactive instructions textbox */
+#interaction-instructions {
+    position: absolute;
+    bottom: 20px;
+    right: 20px; /* Positioned at Bottom Right */
+    width: 230px; 
+    padding: 15px;
+    
+    /* Very dark, semi-transparent background */
+    background-color: rgba(5, 5, 10, 0.9); 
+    
+    border: none;
+    border-radius: 4px; 
+    
+    color: #E0E0E0; 
+    font-size: 13px; 
+    line-height: 1.5; 
+    z-index: 10;
+    
+    /* Interactive properties */
+    cursor: pointer;
+    will-change: max-height;
+    transition: max-height 0.3s ease, background-color 0.2s; 
+    overflow: hidden; 
+    max-height: 300px; 
+}
+
+#interaction-instructions:hover {
+    background-color: rgba(20, 20, 30, 0.95); 
+}
+
+/* Collapsed state styling */
+#interaction-instructions.collapsed {
+    max-height: 40px; 
+}
+
+#instructions-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+    margin-bottom: 8px;
+    border-bottom: 1px solid rgba(146, 102, 182, 0.3); /* Muted Purple divider */
+    padding-bottom: 5px;
+    color: #FFFFFF; /* Purple header */
+}
+
+#instructions-content p {
+    margin: 0 0 8px 0; 
+}
+
+#instructions-content p:last-child {
+    margin-bottom: 0; 
+}
+
+#toggle-icon {
+    font-weight: bold;
+    font-size: 16px;
+}
