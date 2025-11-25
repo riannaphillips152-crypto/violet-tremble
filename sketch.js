@@ -5,8 +5,8 @@ let capture; // Variable for webcam
 // --- Color Palettes: Dark, Desaturated, Cool Tones for Dread ---
 const palette1 = {
   bg: '#000000', // Pure black background for stark contrast
-  primary: '#CA8BFF', // Original purple, kept for familiarity
-  accent1: '#FDFD96', // Yellow/Cream for subtle highlight
+  primary: '#CA8BFF', // purple - Plutchik colour theory
+  accent1: '#FDFD96', // Yellow/Cream  subtle highlight
   accent2: '#9266B6', // Darker Muted Purple for depth
 };
 
@@ -14,7 +14,7 @@ const palette2 = {
   bg: '#080810', // Very dark blue-black
   primary: '#4682B4', // Steel Blue
   accent1: '#B0C4DE', // Light Steel Blue
-  accent2: '#2F4F4F', // Dark Slate Gray (for deeper dread)
+  accent2: '#2F4F4F', // Dark Slate Gray- for deeper dread)
 };
 
 // --- UI Logic ---
@@ -22,7 +22,7 @@ function toggleInfo() {
     const infoBox = document.getElementById('interaction-instructions');
     const icon = document.getElementById('toggle-icon');
     
-    // Toggle the class
+    // Toggle 
     infoBox.classList.toggle('collapsed');
 
     // Update icon text
@@ -43,7 +43,7 @@ function setup() {
   // Hue: 0-360, Saturation: 0-100, Brightness: 0-100, Alpha: 0-1
   colorMode(HSB, 360, 100, 100, 1);
   
-  // --- FIX: Performance Optimization ---
+  // eformance Optimization
   pixelDensity(1);
 
   // --- VIDEO CAPTURE SETUP ---
@@ -56,9 +56,7 @@ function setup() {
   if (!dreadSlider) {
       console.error("Dread slider not found! Make sure 'dreadSlider' ID exists in index.html.");
   }
-  
-  // Attach the event listener to the info box
-  const infoBox = document.getElementById('interaction-instructions');
+    const infoBox = document.getElementById('interaction-instructions');
   if (infoBox) {
       infoBox.addEventListener('click', toggleInfo);
   }
@@ -70,14 +68,13 @@ function setup() {
 
 function draw() {
   if (fearInstance) {
-    // IMPORTANT: Fear class uses translate(width/2, height/2).
-    // We wrap it in push/pop so the translation doesn't affect the video drawn afterwards.
+
     push();
     fearInstance.draw();
     pop();
   } else {
     background(0);
-    fill(0, 100, 100); // White in HSB
+    fill(0, 100, 100); // White - HSB
     textSize(24);
     textAlign(CENTER, CENTER);
     text("Loading Fear...", width/2, height/2);
@@ -95,7 +92,6 @@ function draw() {
       // Draw video
       image(capture, x, y, vidWidth, vidHeight);
       
-      // Removed Border as requested previously
       pop();
   }
 }
@@ -156,7 +152,6 @@ class Fear {
     // Muted Background Fade:
     let fadeAlpha = map(this.fearIntensity, 0.5, 3.5, 5, 20); // Mouse Y for momentary panic trails
     let dreadFadeBonus = map(this.dreadLevel, 0, 1, 0, 10); // Slider for persistent background fade
-    // Use the HSB components of backgroundColor for fill, with adjusted alpha (0-1 range for alpha)
     fill(hue(this.backgroundColor), saturation(this.backgroundColor), brightness(this.backgroundColor), (fadeAlpha + dreadFadeBonus) / 255); 
     rect(0, 0, width, height);
 
@@ -168,7 +163,7 @@ class Fear {
 
     translate(width / 2, height / 2); 
 
-    // Mouse Y influences momentary fear intensity (panic/agitation)
+    // Mouse Y  momentary fear intensity (panic/agitation)
     this.fearIntensity = map(mouseY, height, 0, 0.5, 3.5, true); 
     // Combine with slider for overall fear state:
     let combinedFear = this.fearIntensity + this.dreadLevel * 4; // Slider adds to the base fear
@@ -177,15 +172,15 @@ class Fear {
     let mouseXNormalized = map(mouseX, 0, width, -1, 1);
     let absMouseXNormalized = abs(mouseXNormalized);
 
-    // flowFieldNoiseInfluence (chaos of Perlin noise) is now influenced by both mouseX distance from center and dreadLevel
+    // flowFieldNoiseInfluence (chaos of Perlin noise) is  influenced by both mouseX distance from center and dreadLevel
     this.flowFieldNoiseInfluence = map(absMouseXNormalized, 0, 1, 0.5, 1.5, true); // Mouse X distance to influence noise
     this.flowFieldNoiseInfluence += this.dreadLevel * 0.8; // Slider increases base chaos
 
-    // Direct horizontal pull strength, influenced by fearIntensity and dreadLevel
+    // Direct horizontal pull strength, influenced by fearIntensity , dreadLevel
     let mousePullStrength = map(combinedFear, 0.5, 5.5, 0.05, 0.3); // Scaled by combined fear
     this.directMouseXForce = mouseXNormalized * mousePullStrength;
 
-    // Handle panic jolt (overrides temporarily)
+    // Handle panic jolt-overrides temporarily
     if (this.panicJoltCounter > 0) {
       this.fearIntensity = 4.0; // Max momentary panic
       this.flowFieldNoiseInfluence = 2.5 + this.dreadLevel; // Max chaos for jolt + dread
@@ -297,15 +292,15 @@ class FearParticle {
         colorBase = noise(this.pos.x * 0.01, this.pos.y * 0.01, fearInstance.zOff * 0.5);
     }
     
-    // Get colors from palette; these are p5.Color objects
+    // Get colors from palette; -  p5.Color objects
     let primaryCol = fearInstance.particlePalette.primary;
     let accent1Col = fearInstance.particlePalette.accent1; 
     let accent2Col = fearInstance.particlePalette.accent2; 
 
-    // Step 1: Blend between primary and accent2 for the base particle color
+    // Blend between primary and accent2 for the base particle color
     let tempColor = lerpColor(primaryCol, accent2Col, colorBase);
 
-    // Step 2: Extract HSB components, modify, and create a NEW color object.
+    // Extract HSB components, modify, and create a  color object.
     // This is the crucial change to avoid the 'setSaturation' error.
     let h = hue(tempColor);
     let s = saturation(tempColor);
@@ -320,7 +315,7 @@ class FearParticle {
     let finalParticleColor = color(h, s, b);
 
 
-    // If there's a jolt, make particles temporarily brighter/more pronounced
+    // If there's a jolt, make particles temporarily brighter/more pronounced for emphasis
     if (fearInstance.panicJoltCounter > 0) {
         // Lerp the *finalParticleColor* towards accent1Col (the bright accent)
         finalParticleColor = lerpColor(finalParticleColor, accent1Col, map(fearInstance.panicJoltCounter, 0, 30, 0, 0.8)); 
